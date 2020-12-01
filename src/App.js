@@ -1,23 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
-
+import firebase, {auth} from "./firebase/config"
+import {startUi} from "./firebase/config"
 function App() {
+
+  let provider= new firebase.auth.GoogleAuthProvider();
+
+  const signInGoogle=()=>{
+    firebase.auth().signInWithPopup(provider)
+      .then(result=>{
+        let token=result.credential.accessToken;
+        let user=result.user; 
+      }).catch(error=>{
+        console.log(error)
+      })
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <button onClick={signInGoogle}>Sign In with google</button>
     </div>
   );
 }
